@@ -1,0 +1,6 @@
+on: pull_request
+jobs:
+  test:
+    steps:
+      - run: npm install
+      - run: npm test
