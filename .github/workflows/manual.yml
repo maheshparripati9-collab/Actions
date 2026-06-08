@@ -20,7 +20,7 @@ jobs:
           -H "Authorization: Bearer ${{ secrets.DATABRICKS_TOKEN }}" \
           -H "Content-Type: application/json" \
           -d '{
-                "job_id": 752441656219884,
+                "job_id": 199210744483597,
                 "notebook_params": {
                   "country": "${{ github.event.inputs.country }}"
                 }
