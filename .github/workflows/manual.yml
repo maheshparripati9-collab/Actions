@@ -1,4 +1,4 @@
-name: Promote Country Data
+name: Promote Country Data TEST
 
 on:
   workflow_dispatch:
