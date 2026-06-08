@@ -1,0 +1,27 @@
+name: Promote Country Data
+
+on:
+  workflow_dispatch:
+    inputs:
+      country:
+        description: "Country to promote"
+        required: true
+        type: string
+
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Trigger Databricks Job
+        run: |
+          curl -X POST \
+          ${{ secrets.DATABRICKS_HOST }}/api/2.1/jobs/run-now \
+          -H "Authorization: Bearer ${{ secrets.DATABRICKS_TOKEN }}" \
+          -H "Content-Type: application/json" \
+          -d '{
+                "job_id": 752441656219884,
+                "notebook_params": {
+                  "country": "${{ github.event.inputs.country }}"
+                }
+              }'
