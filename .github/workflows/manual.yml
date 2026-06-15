@@ -10,7 +10,10 @@ on:
       lable_period_name:
         description: "Lable period to promote"
         required: true
-        type: string
+        type: string				
+											  
+					  
+					
 
 jobs:
   promote:
@@ -25,6 +28,8 @@ jobs:
           -H "Content-Type: application/json" \
           -d '{
                 "job_id": 199210744483597,
-                "country": "${{ github.event.inputs.country }}"
+                "notebook_params": {
+                  "country": "${{ github.event.inputs.country }}",
+				          "lable_period_name": "${{ github.event.inputs.lable_period_name }}"
                 }
               }'
