@@ -8,6 +8,11 @@ on:
         required: true
         type: string
 
+      lable_period_name:
+        description: "Lable period to promote"
+        required: true
+        type: string
+
 jobs:
   promote:
     runs-on: ubuntu-latest
@@ -16,12 +21,13 @@ jobs:
       - name: Trigger Databricks Job
         run: |
           curl -X POST \
-          ${{ secrets.DATABRICKS_HOST }}/api/2.1/jobs/run-now \
+          "${{ secrets.DATABRICKS_HOST }}/api/2.1/jobs/run-now" \
           -H "Authorization: Bearer ${{ secrets.DATABRICKS_TOKEN }}" \
           -H "Content-Type: application/json" \
           -d '{
-                "job_id": 199210744483597,
-                "notebook_params": {
-                  "country": "${{ github.event.inputs.country }}"
-                }
-              }'
+            "job_id": 199210744483597,
+            "notebook_params": {
+              "country": "${{ github.event.inputs.country }}",
+              "lable_period_name": "${{ github.event.inputs.lable_period_name }}"
+            }
+          }'
