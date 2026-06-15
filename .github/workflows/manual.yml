@@ -25,7 +25,7 @@ jobs:
           -H "Content-Type: application/json" \
           -d '{
                 "job_id": 199210744483597,
-                "notebook_params": {
-                  "country": "${{ github.event.inputs.country }}"
+                "country": "${{ github.event.inputs.country }}",
+                "lable_period_name": "${{ github.event.inputs.lable_period_name }}"
                 }
               }'
