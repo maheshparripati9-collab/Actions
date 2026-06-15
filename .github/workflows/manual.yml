@@ -7,7 +7,7 @@ on:
         description: "Country to promote"
         required: true
         type: string
-      lable period name:
+      lable_period_name:
         description: "Lable period to promote"
         required: true
         type: string
