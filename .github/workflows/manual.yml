@@ -11,9 +11,6 @@ on:
         description: "Lable period to promote"
         required: true
         type: string				
-											  
-					  
-					
 
 jobs:
   promote:
@@ -29,6 +26,6 @@ jobs:
           -d '{
                 "job_id": 199210744483597,
                 "notebook_params": {
-                  "country": "${{ github.event.inputs.country }}"
+                  "country": "${{ github.event.inputs.country }}
                 }
               }'
