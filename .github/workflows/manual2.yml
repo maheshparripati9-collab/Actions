@@ -1,0 +1,45 @@
+name: Promote Country Data TEST2
+
+on:
+  workflow_dispatch:
+    inputs:
+      country:
+        description: "Country to promote"
+        required: true
+        type: string
+
+      lable_period_name:
+        description: "Lable period to promote"
+        required: true
+        type: string
+
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Trigger Databricks Job
+        env:
+          # Storing inputs as environment variables avoids bash quote-breaking
+          COUNTRY_INPUT: ${{ github.event.inputs.country }}
+          LABLE_PERIOD_INPUT: ${{ github.event.inputs.lable_period_name }}
+        run: |
+          # Use jq to safely construct the JSON payload with escaped quotes
+          PAYLOAD=$(jq -n \
+            --arg job_id "199210744483597" \
+            --arg country "$COUNTRY_INPUT" \
+            --argjson lable_period "$LABLE_PERIOD_INPUT" \
+            '{
+              job_id: ($job_id | tonumber),
+              notebook_params: {
+                country: $country,
+                lable_period_name: ($lable_period | tostring)
+              }
+            }')
+
+          # Send the safely escaped payload
+          curl -X POST \
+          "${{ secrets.DATABRICKS_HOST }}/api/2.1/jobs/run-now" \
+          -H "Authorization: Bearer ${{ secrets.DATABRICKS_TOKEN }}" \
+          -H "Content-Type: application/json" \
+          -d "$PAYLOAD"
